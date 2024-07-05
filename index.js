@@ -14,6 +14,7 @@ const app = express();
 /* --- 路由規則 --- */
 app.get("/",(req,res) => {
     // res.send("這是首頁");
+    // 重新定向到指定url-redirect
     res.redirect("/singer/3.html");
 });
 
@@ -40,24 +41,26 @@ app.get("/singer/:id.html",(req,res) => {
     }
     // 有結果
     res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${result.singer_name}</title>
-</head>
-<body>
-    <h1>${result.singer_name}</h1>
-     <h3>${result.singer_id}</h3>
-    <img src="${result.singer_img}" alt="">
-</body>
-</html>`);
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${result.singer_name}</title>
+                </head>
+                <body>
+                    <h1>${result.singer_name}</h1>
+                    <h3>${result.singer_id}</h3>
+                    <img src="${result.singer_img}" alt="">
+                </body>
+                </html>`);
 });
 
+/* --- 捕獲所有其他路徑 --- */
 app.all("*",(req,res) => {
     res.send("<h1>404-找不到</h1>")
 })
 
+/* --- 啟動伺服器 --- */
 app.listen(3000,() => {
     console.log(`服務已啟動於http://localhost:3000`);
 })
