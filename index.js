@@ -1,25 +1,28 @@
 /**
-* common js模組寫法
+* CommonJS 模組寫法
 */
 
-const express = require("express");
-// 導入json
-// const data = require("./singer.json");
-const {singers} = require("./singer.json");
-console.log(singers);
+/* --- 導入模組 --- */
+    const express = require("express");
+    // 導入json
+    const {singers} = require("./singer.json");
+    console.log(singers);
 
-const portNum = 3000;
-const app = express();
+/* --- 應用express --- */
+    const app = express();
 
-/* --- 路由規則 --- */
+/* --- 定義路由規則 --- */
 app.get("/",(req,res) => {
     // res.send("這是首頁");
     // 重新定向到指定url-redirect
     res.redirect("/singer/3.html");
 });
 
+// 路徑參數 :id 
 app.get("/singer/:id.html",(req,res) => {
-    const id = parseInt(req.params.id);
+    // 獲取URL中的 id 參數，並將其轉換為整數
+    const id = parseInt(req.params.id); 
+    // 在 singers 數組中查找匹配的歌手對象
     const result = singers.find( singer => {
         if(singer.id === id){
             return true;
@@ -33,8 +36,8 @@ app.get("/singer/:id.html",(req,res) => {
     // }
 
     // 寫法二
-    if(!result){
-        // 沒有結果
+    if(!result){  // 沒有結果
+        // statusCode設置http響應狀態碼   
         res.statusCode = 404;
         res.send("<h1>404-找不到歌手</h1>")
         return;
